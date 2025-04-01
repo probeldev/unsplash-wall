@@ -1,3 +1,5 @@
+set -x
+
 timestamp=$(date +%s)
 echo $timestamp
 
