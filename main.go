@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/probeldev/fastlauncher/model"
-	"github.com/probeldev/fastlauncher/model/wall"
+	"github.com/probeldev/fastlauncher/wall"
 )
 
 func getDataJson(data string) (
