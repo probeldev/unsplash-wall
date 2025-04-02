@@ -9,12 +9,12 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/probeldev/fastlauncher/model"
+	"github.com/probeldev/fastlauncher/model/wall"
 )
 
 func getDataJson(data string) (
@@ -110,7 +110,7 @@ func run() {
 	log.Println(imagePath)
 
 	// Устанавливаем обои
-	err = setWallpaper(imagePath)
+	err = wall.GetSwaybg().SetWallpaper(imagePath)
 	if err != nil {
 		log.Fatalf("Failed to set wallpaper: %v", err)
 	}
@@ -137,22 +137,6 @@ func downloadFile(url, filepath string) error {
 
 	_, err = io.Copy(out, resp.Body)
 	return err
-}
-
-func setWallpaper(imagePath string) error {
-	// Preload image
-	cmd := exec.Command("hyprctl", "hyprpaper", "preload", imagePath)
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("failed to preload wallpaper: %v", err)
-	}
-
-	// Set wallpaper
-	cmd = exec.Command("hyprctl", "hyprpaper", "wallpaper", ",", imagePath)
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("failed to set wallpaper: %v", err)
-	}
-
-	return nil
 }
 
 // Вспомогательная функция для поиска подстроки
