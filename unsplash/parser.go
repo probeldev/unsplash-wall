@@ -1,12 +1,15 @@
 package unsplash
 
 import (
+	"encoding/json"
 	"errors"
 	"io"
 	"log"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/probeldev/fastlauncher/model"
 )
 
 type unsplashParser struct{}
@@ -77,4 +80,29 @@ func (u *unsplashParser) GetJsonData() []byte {
 
 		return data
 	}
+}
+
+func (u *unsplashParser) GetImageUrls() (
+	[]string,
+	error,
+) {
+	jsonData := u.GetJsonData()
+	var downloadURLs []string
+
+	var data model.Root
+	err := json.Unmarshal([]byte(jsonData), &data)
+	if err != nil {
+		return downloadURLs, err
+	}
+
+	photos := data.ReduxInitialState.Entities.Photos
+	for _, p := range photos {
+		downloadURLs = append(downloadURLs, p.Links.Download)
+	}
+
+	if len(downloadURLs) == 0 {
+		return downloadURLs, errors.New("No download URLs found")
+	}
+
+	return downloadURLs, nil
 }
