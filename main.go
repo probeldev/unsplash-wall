@@ -14,26 +14,9 @@ import (
 	"time"
 
 	"github.com/probeldev/fastlauncher/model"
+	"github.com/probeldev/fastlauncher/unsplash"
 	"github.com/probeldev/fastlauncher/wall"
 )
-
-func getDataJson(data string) (
-	string,
-	error,
-) {
-
-	data = strings.ReplaceAll(data, ">", ">\n")
-	data = strings.ReplaceAll(data, "<", "\n<")
-	dataArray := strings.Split(data, "\n")
-	for _, data := range dataArray {
-		if strings.Contains(data, `"download":`) {
-			return data, nil
-		}
-	}
-
-	return "", errors.New("json not found")
-
-}
 
 func run() {
 	// Создаем временную директорию
@@ -46,22 +29,8 @@ func run() {
 	// Получаем текущую метку времени
 	timestamp := time.Now().Unix()
 
-	// Загружаем страницу Unsplash
-	resp, err := http.Get("https://unsplash.com/")
-	if err != nil {
-		log.Fatalf("Failed to fetch Unsplash: %v", err)
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalf("Failed to read response: %v", err)
-	}
-
-	jsonData, err := getDataJson(string(body))
-	if err != nil {
-		log.Fatal(err)
-	}
+	unsplashParser := unsplash.GetUnsplashParser()
+	jsonData := unsplashParser.GetJsonData()
 
 	// Парсим JSON
 	var data model.Root
