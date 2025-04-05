@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
 	"github.com/probeldev/fastlauncher/imageHelper"
@@ -74,15 +73,6 @@ func run() {
 	}
 
 	fmt.Println("Wallpaper set successfully!")
-}
-
-// Вспомогательная функция для поиска подстроки
-func stringIndex(s, substr string) int {
-	idx := len(substr) + strings.Index(s, substr)
-	if idx < len(substr) {
-		return -1
-	}
-	return idx
 }
 
 func main() {
