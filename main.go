@@ -126,7 +126,6 @@ func downloadRandomImage(
 	error,
 ) {
 	// Выбираем случайный URL
-	rand.Seed(time.Now().UnixNano())
 	selectedURL := downloadURLs[rand.Intn(len(downloadURLs))]
 
 	// Скачиваем изображение
