@@ -13,6 +13,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/probeldev/fastlauncher/imageHelper"
 	"github.com/probeldev/fastlauncher/model"
 	"github.com/probeldev/fastlauncher/unsplash"
 	"github.com/probeldev/fastlauncher/wall"
@@ -64,9 +65,15 @@ func run() {
 	countTry := 0
 	for {
 		imagePath, err = downloadRandomImage(downloadURLs, tmpDir, timestamp)
-		if err == nil {
+		if err != nil {
+			log.Println(err)
+		}
+
+		ih := imageHelper.GetImageHelper()
+		if ih.IsHorizontal(imagePath) {
 			break
 		}
+
 		countTry++
 		time.Sleep(5 * time.Second)
 		log.Println("sleep")
