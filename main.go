@@ -60,7 +60,8 @@ func run() {
 		log.Println("sleep")
 
 		if countTry > 10 {
-			log.Panic("failde download")
+			time.Sleep(10 * time.Minute)
+			log.Println("long sleep")
 		}
 	}
 
