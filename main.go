@@ -13,6 +13,8 @@ import (
 )
 
 func run() {
+	log.Println("hello")
+
 	// Создаем временную директорию
 	tmpDir := "/tmp/wall"
 	err := os.MkdirAll(tmpDir, 0755)
