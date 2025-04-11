@@ -25,10 +25,10 @@ func (u *unsplashParser) getDataJson(data string) (
 	error,
 ) {
 
-	data = strings.ReplaceAll(data, ">", ">\n")
-	data = strings.ReplaceAll(data, "<", "\n<")
+	data = u.clearJsonData(data)
 	dataArray := strings.Split(data, "\n")
 	for _, data := range dataArray {
+		data = strings.ReplaceAll(data, `\"`, `"`)
 		if strings.Contains(data, `"download":`) {
 			return data, nil
 		}
@@ -36,6 +36,17 @@ func (u *unsplashParser) getDataJson(data string) (
 
 	return "", errors.New("json not found")
 
+}
+
+func (u *unsplashParser) clearJsonData(data string) string {
+
+	data = strings.ReplaceAll(data, ">", ">\n")
+	data = strings.ReplaceAll(data, "<", "\n<")
+	data = strings.ReplaceAll(data, `window.__DEHYDRATED_DATA__ = "`, ``)
+	data = strings.ReplaceAll(data, `\"`, `"`)
+	data = strings.ReplaceAll(data, `";`, ``)
+
+	return data
 }
 
 func (u *unsplashParser) getJson() ([]byte, error) {

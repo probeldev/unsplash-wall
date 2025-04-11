@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -20,6 +21,7 @@ func GetWallDownloader() *wallDownloader {
 }
 
 func (w *wallDownloader) downloadFile(url string, filepath string) error {
+	fn := "wallDownloader:downloadFile"
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
@@ -27,6 +29,7 @@ func (w *wallDownloader) downloadFile(url string, filepath string) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		log.Println(fn, "statusCode:", resp.StatusCode, "url:", url)
 		return errors.New("failed download image")
 	}
 
