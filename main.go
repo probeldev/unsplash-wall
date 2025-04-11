@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/probeldev/fastlauncher/imageHelper"
-	"github.com/probeldev/fastlauncher/unsplash"
-	"github.com/probeldev/fastlauncher/wall"
+	"github.com/probeldev/unsplash-wall/imageHelper"
+	"github.com/probeldev/unsplash-wall/unsplash"
+	"github.com/probeldev/unsplash-wall/wall"
 )
 
 func run() {

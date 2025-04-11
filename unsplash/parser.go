@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/probeldev/fastlauncher/model"
+	"github.com/probeldev/unsplash-wall/model"
 )
 
 type unsplashParser struct{}
