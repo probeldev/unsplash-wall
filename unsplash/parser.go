@@ -40,6 +40,7 @@ func (u *unsplashParser) getDataJson(data string) (
 
 func (u *unsplashParser) clearJsonData(data string) string {
 
+	data = strings.ReplaceAll(data, "->", "")
 	data = strings.ReplaceAll(data, ">", ">\n")
 	data = strings.ReplaceAll(data, "<", "\n<")
 	data = strings.ReplaceAll(data, `window.__DEHYDRATED_DATA__ = "`, ``)
@@ -57,7 +58,12 @@ func (u *unsplashParser) getJson() ([]byte, error) {
 		log.Println(fn, err)
 		return []byte{}, err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err = resp.Body.Close()
+		if err != nil {
+			log.Println(fn, err)
+		}
+	}()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
@@ -112,7 +118,7 @@ func (u *unsplashParser) GetImageUrls() (
 	}
 
 	if len(downloadURLs) == 0 {
-		return downloadURLs, errors.New("No download URLs found")
+		return downloadURLs, errors.New("no download URLs found")
 	}
 
 	return downloadURLs, nil
