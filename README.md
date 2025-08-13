@@ -15,3 +15,11 @@ go install github.com/probeldev/unsplash-wall
 ```bash
 nix profile install github:probeldev/unsplash-wall 
 ```
+
+## Usage
+
+Add to startup
+
+```bash
+unsplash-wall
+```
